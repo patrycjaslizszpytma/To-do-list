@@ -14,9 +14,9 @@
 
 
   const removeTask = (taskIndex) => {
-    tasks.splice(taskIndex, 1); 
-        //every delete button will be deleting other task thanks to the index value
-        render();
+    tasks.splice(taskIndex, 1);
+    //every delete button will be deleting other task thanks to the index value
+    render();
   };
 
 
@@ -31,6 +31,13 @@
 
 
 
+  const toggleTaskDone = (taskIndex) => {
+    tasks[taskIndex].done = !tasks[taskIndex].done; //catching the task index and creating opposite property
+    render();
+  };
+
+
+
   const render = () => {
     let htmlString = ""; //at the beginning is a empty string chain
 
@@ -39,10 +46,15 @@
       htmlString += `
             
                 <li 
-                    ${task.done ? "style=\"text-decoration: line-through\"" : ""}
-                    >
-                    <button class="js-remove"> Delete </button>
-                    ${task.content}
+                  ${task.done ? "style=\"text-decoration: line-through\"" : ""}
+                >
+
+                  ${task.content}
+
+                  <button class="js-done"> Done </button>
+
+                  <button class="js-remove"> Delete </button>
+                   
                 </li>
             `; //creating a line through decoration for done tasks and sticking a delete button to each task
     };
@@ -52,19 +64,31 @@
 
 
     const removeButtons = document.querySelectorAll(".js-remove"); //creating the delete button, catching all button with js-remove class
-  
+
     //console.log(removeButtons); //NodeList, similar to table, for checking
-  
+
     removeButtons.forEach((removeButton, index) => { //removeButton is a button and index is it loc that is  transferred to remove task function
 
       removeButton.addEventListener("click", () => {
-
         removeTask(index);
       });
-    })
+    });
+
+
+
+    const toggleDoneButtons = document.querySelectorAll(".js-done");
+    toggleDoneButtons.forEach((toggleDoneButton, index) => {
+      toggleDoneButton.addEventListener("click", () => {
+        toggleTaskDone(index);
+      });
+    });
+
+
   };
 
+
   
+
 
   const onFormSubmit = (event) => {
     event.preventDefault();
