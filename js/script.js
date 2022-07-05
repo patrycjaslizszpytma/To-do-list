@@ -2,11 +2,11 @@
 
   const tasks = [
     {
-      content: "nagrać lekcję",
+      content: "first task",
       done: false,
     },
     {
-      content: "zjeść pierogi",
+      content: "second task",
       done: true,
     },
   ];
@@ -38,6 +38,24 @@
 
 
 
+  const bindEvents = () => {
+    const removeButtons = document.querySelectorAll(".js-remove"); //creating the delete button, catching all button with js-remove class
+    //console.log(removeButtons); //NodeList, similar to table, for checking
+    removeButtons.forEach((removeButton, index) => { //removeButton is a button and index is it loc that is  transferred to remove task function
+      removeButton.addEventListener("click", () => {
+        removeTask(index);
+      });
+    });
+
+
+    const toggleDoneButtons = document.querySelectorAll(".js-done");
+    toggleDoneButtons.forEach((toggleDoneButton, index) => {
+      toggleDoneButton.addEventListener("click", () => {
+        toggleTaskDone(index);
+      });
+    });
+  };
+
   const render = () => {
     let htmlString = ""; //at the beginning is a empty string chain
 
@@ -61,28 +79,7 @@
     document.querySelector(".js-tasks").innerHTML = htmlString; // string is putted do the task list
     //the js-tasks is replaced by the htmlString values which was iterated
 
-
-
-    const removeButtons = document.querySelectorAll(".js-remove"); //creating the delete button, catching all button with js-remove class
-
-    //console.log(removeButtons); //NodeList, similar to table, for checking
-
-    removeButtons.forEach((removeButton, index) => { //removeButton is a button and index is it loc that is  transferred to remove task function
-
-      removeButton.addEventListener("click", () => {
-        removeTask(index);
-      });
-    });
-
-
-
-    const toggleDoneButtons = document.querySelectorAll(".js-done");
-    toggleDoneButtons.forEach((toggleDoneButton, index) => {
-      toggleDoneButton.addEventListener("click", () => {
-        toggleTaskDone(index);
-      });
-    });
-
+    bindEvents();
 
   };
 
@@ -93,7 +90,7 @@
   const onFormSubmit = (event) => {
     event.preventDefault();
 
-    const newTaskContent = document.querySelector(".js-newTask").value.trim(); //manupulation the task content, triming the white symbols outside the task
+    const newTaskContent = document.querySelector(".js-newTask").value.trim(); //manipulation the task content, trimming the white symbols outside the task
 
     if (newTaskContent === " ") {
       return; //do nothing is the string chain is empty
