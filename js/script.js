@@ -1,15 +1,6 @@
 {
 
-  const tasks = [
-    {
-      content: "first task",
-      done: false,
-    },
-    {
-      content: "second task",
-      done: true,
-    },
-  ];
+  const tasks = [];
 
 
 
@@ -22,10 +13,8 @@
 
 
   const addNewTask = (newTaskContent) => {
-    tasks.push({ //creating and pushing an object which is a new task
-      content: newTaskContent,
-    });
-
+    tasks.push({content: newTaskContent}); 
+    //creating and pushing an object which is a new task
     render();
   };
 
@@ -38,7 +27,7 @@
 
 
 
-  const bindEvents = () => {
+  const bindRemoveEvents = () => {
     const removeButtons = document.querySelectorAll(".js-remove"); //creating the delete button, catching all button with js-remove class
     //console.log(removeButtons); //NodeList, similar to table, for checking
     removeButtons.forEach((removeButton, index) => { //removeButton is a button and index is it loc that is  transferred to remove task function
@@ -46,8 +35,9 @@
         removeTask(index);
       });
     });
+  };
 
-
+  const bindToggleDoneEvents = () => {
     const toggleDoneButtons = document.querySelectorAll(".js-done");
     toggleDoneButtons.forEach((toggleDoneButton, index) => {
       toggleDoneButton.addEventListener("click", () => {
@@ -57,34 +47,42 @@
   };
 
   const render = () => {
-    let htmlString = ""; //at the beginning is a empty string chain
+    let tasksListHTMLContent = ""; //at the beginning is a empty string chain
 
     for (const task of tasks) {
       //using for of loop we do an iteration on every task of tasks and an adding, here the indexes does not matter
-      htmlString += `
-            
-                <li 
-                  ${task.done ? "style=\"text-decoration: line-through\"" : ""}
-                >
+      tasksListHTMLContent += `
+                  <li 
+                    class="tasks__item js-task"
+                  >
 
-                  ${task.content}
+                  <button class="tasks__button tasks__button--done js-done">
+                    ${task.done ? "✅" : " "}
+                  </button>
 
-                  <button class="js-done"> Done </button>
+                  <span class="tasks__content${task.done ? "tasks__content--done" : " "}">
+                    ${task.content}
+                  </span>
 
-                  <button class="js-remove"> Delete </button>
+                  <button class="tasks__button tasks__button--remove js-remove">
+                    🗑 
+                  </button>
                    
-                </li>
-            `; //creating a line through decoration for done tasks and sticking a delete button to each task
+                  </li>
+        `; //creating a line through decoration for done tasks and sticking a delete button to each task
     };
-    document.querySelector(".js-tasks").innerHTML = htmlString; // string is putted do the task list
+    document.querySelector(".js-tasks").innerHTML = tasksListHTMLContent; // string is putted do the task list
     //the js-tasks is replaced by the htmlString values which was iterated
 
-    bindEvents();
+    document.querySelector(".js-stats").innerText = `
+      Total number of tasks: ${tasks.length}\n
+      Total number of finished tasks: ${tasks.filter(task => task.done).length}
+    `;
+
+    bindRemoveEvents();
+    bindToggleDoneEvents();
 
   };
-
-
-  
 
 
   const onFormSubmit = (event) => {
@@ -92,11 +90,15 @@
 
     const newTaskContent = document.querySelector(".js-newTask").value.trim(); //manipulation the task content, trimming the white symbols outside the task
 
-    if (newTaskContent === " ") {
+    if (newTaskContent === "") {
       return; //do nothing is the string chain is empty
     }
 
     addNewTask(newTaskContent); //function call addNewTask
+
+    const inputCleaner = document.querySelector(".js-newTask");
+    inputCleaner.value = "";
+
   }
 
 
@@ -108,7 +110,11 @@
 
     form.addEventListener("submit", onFormSubmit); //function call onFormSubmit on "submit"  
 
+
   };
+
+
+
 
   init();
 }
