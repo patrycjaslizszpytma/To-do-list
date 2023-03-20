@@ -1,0 +1,32 @@
+.tasks__item--hidden{
+    display: none;
+}
+
+.buttons{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.buttons__button{
+    color: hsl(206, 81%, 23%);
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    transition: color 0.3s;
+    margin: 0 0 0 20px;
+    
+}
+
+.buttons__button:disabled {
+    color: #ccc;
+}
+
+.buttons__button:hover{
+    color: hsl(206, 81%, 33%);
+    transition: 0.5s;
+}
+
+.buttons__button:active {
+    color: hsl(206, 81%, 50%);
+}
+

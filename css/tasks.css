@@ -1,0 +1,54 @@
+.tasks{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tasks__item{
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #aaa;
+}
+
+.tasks__content--done{
+    text-decoration: line-through;
+}
+
+
+.tasks__button{
+    border: none;
+    color: #ffffff;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.tasks__button--done{
+    background-color: hsl(120, 61%, 34%);
+}
+
+.tasks__button--done:hover{
+    background-color: hsl(120, 61%, 40%);
+    transition: all 0.5s;   
+}
+
+.tasks__button--done:active{
+    background-color: hsl(120, 61%, 45%);
+}
+
+.tasks__button--remove{
+    background-color: hsl(348, 83%, 47%);
+}
+
+.tasks__button--remove:hover{
+    background-color: hsl(348, 83%, 52%);
+    transition: all 0.5s;
+}
+
+.tasks__button--remove:active{
+    background-color: hsl(348, 83%, 57%);
+}
